@@ -41,7 +41,7 @@ export function getSchema(ctx, module) {
     username: {
       type: String,
       // required: true,
-      index: { unique: true },
+      // index: { unique: true },
       tolowercase: true,
       trim: true,
     },
@@ -78,8 +78,6 @@ export function getSchema(ctx, module) {
       default: Date.now,
     },
   }, {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
     model: 'User',
     collection: 'user',
     timestamps: true,

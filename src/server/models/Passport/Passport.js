@@ -116,7 +116,10 @@ export function getSchema(ctx, module) {
 
   schema.methods.updateToken = async function a(...args) {
     const strategy = this.getStrategy();
-    if (!strategy) return;
+    if (!strategy) {
+      console.error('passport.updateToken: !strategy');
+      return;
+    }
     await strategy.updateTokens(this, ...args);
   };
 
