@@ -126,15 +126,18 @@ export function getSchema(ctx, module) {
 
   const { e400, e500 } = ctx.errors;
 
+  schema.methods.setPassword = async function (password) {
+    this.password = await hashPassword(this.password);
+  }
   schema.methods.preSave = async function () {
     // console.log('User.methods.preSave', this.isNew, this.wasNew);
     this.wasNew = this.wasNew || this.isNew;
-    if (this.isModified('password')) {
-      this.password = await hashPassword(this.password);
-    }
-    if (this.isModified('profile')) {
-      this.name = fullName(this.profile) || sample.fullName;
-    }
+    // if (this.isModified('password')) {
+    //   this.password = await hashPassword(this.password);
+    // }
+    // if (this.isModified('profile')) {
+    //   this.name = fullName(this.profile) || sample.fullName;
+    // }
   };
   schema.pre('save', async function (next) {
     // console.log('schema.pre(save', this.isNew);
