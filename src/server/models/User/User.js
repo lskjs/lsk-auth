@@ -69,6 +69,10 @@ export function getSchema(ctx, module) {
       type: {},
       default: {},
     },
+    info: {
+      type: {},
+      default: {},
+    },
     private: {
       type: {},
       default: {},
