@@ -127,7 +127,7 @@ export function getSchema(ctx, module) {
   const { e400, e500 } = ctx.errors;
 
   schema.methods.setPassword = async function (password) {
-    this.password = await hashPassword(this.password);
+    this.password = await hashPassword(password);
   }
   schema.methods.preSave = async function () {
     // console.log('User.methods.preSave', this.isNew, this.wasNew);
