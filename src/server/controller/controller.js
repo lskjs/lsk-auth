@@ -126,13 +126,16 @@ export default (ctx, module) => {
   };
   controller.signup = async function (req) {
     const { User } = ctx.models;
-    const userFields = controller.getUserFields(req);
+    const { password, ...userFields } = controller.getUserFields(req);
     const criteria = controller.getUserCriteria(req);
     const existUser = await User.findOne(criteria);
     if (existUser) throw ctx.errors.e400('Пользователь с таким логином уже зарегистрирован');
     if (!userFields.meta) userFields.meta = {};
     userFields.meta.approvedEmail = false;
     const user = new User(userFields);
+    if (password) {
+      await user.setPassword(password);
+    }
     await user.save();
     req.user = user;
 
@@ -205,7 +208,7 @@ export default (ctx, module) => {
       },
     });
 
-    user.password = password;
+    await user.setPassword(password);
     await user.save();
 
     return {
